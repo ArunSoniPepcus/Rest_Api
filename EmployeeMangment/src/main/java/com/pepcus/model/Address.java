@@ -19,6 +19,9 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(name = "addressType")
+	private String addressType;
+	
 	@Column(name = "street1")
 	private String street1;
 	
@@ -65,37 +68,32 @@ public class Address {
 		return city;
 	}
 
-
-
 	public void setCity(String city) {
 		this.city = city;
 	}
-
-
 
 	public String getState() {
 		return state;
 	}
 
-
-
 	public void setState(String state) {
 		this.state = state;
 	}
-
-
 
 	public String getCountry() {
 		return country;
 	}
 
-
-
 	public void setCountry(String country) {
 		this.country = country;
 	}
 
+	public String getAddressType() {
+		return addressType;
+	}
 
-
+	public void setAddressType(String addressType) {
+		this.addressType = addressType;
+	}
 	
 }

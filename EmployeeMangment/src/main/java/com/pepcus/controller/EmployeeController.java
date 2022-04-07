@@ -1,9 +1,5 @@
 package com.pepcus.controller;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,11 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.pepcus.model.Address;
 import com.pepcus.model.Employee;
 import com.pepcus.service.EmployeeService;
-
 import lombok.Data;
 @Data
 @RestController
@@ -32,8 +25,8 @@ public class EmployeeController {
 		this.employeeService = employeeService;
 	}
 	
-
-	@PostMapping          // mapping between the employee and address in a database
+	// mapping between the employee and address in a database
+	@PostMapping          
 	public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee){
 		       
 		return new ResponseEntity<Employee>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
@@ -51,6 +44,21 @@ public class EmployeeController {
 		return new ResponseEntity<Employee>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
 	}
 	
+	//build get employee by field shorting like employee name,email,phoneNumber
+	@GetMapping("/sorts/{field}")
+	public List<Employee>findEmployeeWithSorting(@PathVariable String field ){
+		List<Employee> employeeSorting=employeeService.findEmployeeWithSorting(field);
+		return employeeSorting;
+	}
+	
+	
+	//build get employee by name filter 
+		@GetMapping("/filters/{name}")
+		public List<Employee>findEmployeeByFilter(@PathVariable String name ){
+			List<Employee> employeeFilter=employeeService.findEmployeeByFilter(name);
+			return employeeFilter;
+		}
+	
 	// build update employee 
 	@PutMapping("{id}")
 	public ResponseEntity<Employee> updateEmployee(@PathVariable("id") long id
@@ -61,9 +69,7 @@ public class EmployeeController {
 	// build delete employee
 	@DeleteMapping("{id}")
 	public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id){
-		
 		employeeService.deleteEmployee(id);
-		
 		return new ResponseEntity<String>("Employee deleted successfully!.", HttpStatus.OK);
 	}
 	
